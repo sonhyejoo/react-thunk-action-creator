@@ -17,10 +17,20 @@ export const addArticle = (article) => {
   };
 };
 
+export const writeArticle = (article) => async (dispatch) => {
+  const response = await fetch("/api/articles", {
+    method: "post",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(article),
+  });
+  const articleW = await response.json();
+  console.log("articleW: ", articleW);
+  dispatch(addArticle(articleW));
+};
+
 export const fetchArticles = () => async (dispatch) => {
   const response = await fetch("/api/articles");
   const articles = await response.json();
-  console.log(articles);
   dispatch(loadArticles(articles));
 };
 
